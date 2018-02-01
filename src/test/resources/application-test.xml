@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-jdbc="http://www.springframework.org/schema/integration/jdbc"
+	xmlns:int-http="http://www.springframework.org/schema/integration/http"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+    http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd 
+    http://www.springframework.org/schema/integration/jdbc 
+    http://www.springframework.org/schema/integration/jdbc/spring-integration-jdbc.xsd
+    http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd
+    http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+       <context:property-placeholder location="classpath:application-test.properties" />
+
+	   <int:channel id="weatherInboundChannel" >
+	   	<int:queue capacity="100"/>
+	   </int:channel>
+
+       <int:channel id="weatherOutboundChannel">
+       	<int:queue capacity="100"/>
+       </int:channel>
+
+       <int:poller max-messages-per-poll="10" fixed-rate="500"  default="true"/>
+
+       <int:gateway service-interface="com.mim.poc.WeatherGateway"	id="weatherGateway" default-request-channel="weatherInboundChannel"  default-reply-channel="weatherOutboundChannel"/>
+     
+		<int-http:outbound-gateway url="${weather.endpoint.url}" request-channel="weatherInboundChannel" reply-channel="weatherOutboundChannel"
+			http-method="GET" extract-request-payload="true" expected-response-type="java.lang.String">
+			<int-http:uri-variable name="city" expression="'q='+payload['city']"/>
+			<int-http:uri-variable name="mode" expression="'mode='+payload['mode']" />
+			<int-http:uri-variable name="appid" expression="'appid='+payload['appId']" />
+		</int-http:outbound-gateway>
+	
+        
+</beans>

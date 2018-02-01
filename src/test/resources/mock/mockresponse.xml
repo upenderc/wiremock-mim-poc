@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<current>
+	<city id="2643743" name="Mock">
+		<coord lon="-0.13" lat="51.51"></coord>
+		<country>GB</country>
+		<sun rise="2017-01-30T07:40:36" set="2017-01-30T16:47:56"></sun>
+	</city>
+	<temperature value="280.15" min="278.15" max="281.15" unit="kelvin"></temperature>
+	<humidity value="81" unit="%"></humidity>
+	<pressure value="1012" unit="hPa"></pressure>
+	<wind>
+		<speed value="4.6" name="Gentle Breeze"></speed>
+		<gusts></gusts>
+		<direction value="90" code="E" name="East"></direction>
+	</wind>
+	<clouds value="90" name="overcast clouds"></clouds>
+	<visibility value="10000"></visibility>
+	<precipitation mode="no"></precipitation>
+	<weather number="701" value="mist" icon="50d"></weather>
+	<lastupdate value="2017-01-30T15:50:00"></lastupdate>
+</current>
